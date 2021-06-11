@@ -1,0 +1,53 @@
+#game {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* use a smaller base size for small screens */
+@media (max-device-width: 480px) and (orientation: portrait), 
+@media (max-device-width: 640px) and (orientation: landscape) {
+    #game {
+        font-size: 32px;
+    }
+} 
+
+/* use a bigger base size for ipad and tabelets */
+
+@media (max-device-width: 1024px) and (orientation: landscape) {
+    #game {
+        font-size: 64px;
+    }
+} 
+
+/* smartphones landscape */
+@media (orientation: landscape) {
+    #splash-screen,
+    #main-menu {
+        font-size: 1.0em;
+        padding-top: 0.75em;
+    }
+    ul.menu li {
+        display: inline-block;
+        margin: 0;
+    }
+    ul.menu li button {
+        margin: 0.5em;
+        font-size: 0.5em;
+    }
+}
+/* small screen landscape */
+@media (orientation: landscape) {
+    ul.menu-li button {
+        font-size: 0.4em;
+    }
+}
+
+/* tablet landscape */
+@media (orientation: landscape) and (min-device-width: 768px) {
+    #splash-screen, 
+    #main-menu {
+        padding-top: 1.5em;
+    }
+}

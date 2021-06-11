@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+	<title>Jewel Warrior</title>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="mobile.css"
+        media = "screen and (max-device-width: 768px) and (orientation: portrait), 
+                screen and (max-device-width: 1024px) and (orientation: landscape)" />
+     <script src="scripts/jewel.js"></script>
+    <script>
+        window.addEventListener("load", function(){
+            jewel.load("scripts/dom.js");
+            if(jewel.isStandalone()) {
+                jewel.load("scripts/screen.splash.js");
+                jewel.load("scripts/screen.main-menu.js");              
+            } else{
+                jewel.load("scripts/screen.install.js");
+            }
+            jewel.load("scripts/board.js", jewel.setup);
+        });
+    </script>
+</head>
+<body>
+    <div id="game">
+        <div class="screen" id="splash-screen">
+            <h1 class="logo">Jewel <br />Warrior</h1>
+            <span class="continue">Click to continue</span> 
+        </div>
+        <div class="screen" id="main-menu">
+            <h2 class="logo">Jewel <br />Warrior</h2>
+            <ul class="menu">
+                <li><button name="game-screen">Play</button></li>
+                <li><button name="high-score">Highscroe</button></li>
+                <li><button name="about">About</button></li>
+                <li><button name="exit-screen">Exit</button></li>
+            </ul>
+        </div>
+        <div class="screen" id="game-screen"></div>
+        <div class="screen" id="high-scores"></div>
+        <div class="screen" id="install-screen">
+            <h1 class="logo">Jewel <br />Warrior</h1>
+            <span>
+                Click the <img src="./ch03/images/install-icon.png" alt="Install icon"> 
+                button to install the game to your home screen. 
+            </span> 
+        </div>
+    </div>
+
+</body>
+</html>
