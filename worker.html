@@ -6,7 +6,7 @@
     <body>
         <textarea cols=80 rows=20 id="output"></textarea>
         <script>
-            var worker = new SharedWorker("shared-worker.js", "worker");
+            var worker = new SharedWorker("scripts/shared-worker.js", "worker");
             worker.port.addEventListener("message", function(event) {
                 document.getElementById("output").value += event.data + "\r\n";
             }, false);
