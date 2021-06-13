@@ -1,17 +1,50 @@
-<!DOCTYPE html>
-<html>
-    <header>
-        <title>Worker Test</title>
-    </header>
-    <body>
-        <textarea cols=80 rows=20 id="output"></textarea>
-        <script>
-            var worker = new SharedWorker("scripts/shared-worker.js", "worker");
-            worker.port.addEventListener("message", function(event) {
-                document.getElementById("output").value += event.data + "\r\n";
-            }, false);
-            worker.port.start();
-            worker.port.postMessage("Hello");
-        </script>
-    </body>
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+    <title>Worker Test</title>
+    <script src="scripts/prime.js"></script>
+</head>
+<body>
+    <!-- textarea cols=80 rows=20 id="output"></textarea>
+    <script>
+        var worker = new SharedWorker("scripts/shared-worker.js", "worker");
+        worker.port.addEventListener("message", function(event) {
+            document.getElementById("output").value += event.data + "\r\n";
+        }, false);
+        worker.port.start();
+        worker.port.postMessage("Hello");
+    </script-->
+
+    Number (n): <input id="number" value="1125899839733759" />
+
+    <button id="check">Is n prime?</button><br /><br />
+    <button id="click-test">Try to click me!</button>
+
+    <script>
+        var button = document.getElementById("check");
+        button.addEventListener("click", function() {
+             var input = document.getElementById("number"), 
+                 n = parseInt(input.value, 10), 
+                 worker = new Worker("scripts/prime-worker.js");
+
+            worker.addEventListener("message", function(event) {
+                if(event.data) {
+                    alert(n + " is a prime number");
+                } else {
+                    alert(n + " is Not a prime number");
+                }
+            })
+            //     res = isPrime(n);
+            // if (res) {
+            //     alert(n + " is a prime number");
+            // }
+        }, false);
+
+        var buttonHello = document.getElementById("click-test");
+        buttonHello.addEventListener("click", function() {
+            alert("Hello!");
+        }, false);
+    </script>
+</body>
 </html>
