@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <title>Worker Test</title>
+    </header>
+    <body>
+        <textarea cols=80 rows=20 id="output"></textarea>
+        <script>
+            var worker = new SharedWorker("shared-worker.js", "worker");
+            worker.port.addEventListener("message", function(event) {
+                document.getElementById("output").value += event.data + "\r\n";
+            }, false);
+            worker.port.start();
+            worker.port.postMessage("Hello");
+        </script>
+    </body>
+</html>
