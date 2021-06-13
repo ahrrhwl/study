@@ -34,7 +34,9 @@
                 } else {
                     alert(n + " is Not a prime number");
                 }
-            })
+            }, false);
+
+            worker.postMessage(n);
             //     res = isPrime(n);
             // if (res) {
             //     alert(n + " is a prime number");
