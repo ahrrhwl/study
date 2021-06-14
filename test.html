@@ -18,6 +18,7 @@
                 jewel.load("scripts/screen.main-menu.js");
                 
                 if (jewel.hasWebWorkers && jewel.hasWebWorkers()) {
+                    jewel.preload("scripts/board.worker.js");
                     jewel.load("scripts/board.worker-interface.js", jewel.setup);
                     console.log("worker");
                 } else {

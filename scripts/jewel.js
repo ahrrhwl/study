@@ -108,7 +108,12 @@ var jewel = (function(){
         return true;
     }
 
+    function hasWebWorkers() {
+        return ("Worker" in window);
+    }
+
     return {
+        hasWebWorkers: hasWebWorkers,
         load: load,
         setup: setup, 
         showScreen: showScreen, 
