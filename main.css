@@ -95,13 +95,13 @@ ul.menu li button:active {
     font-family: "Slackey";
     font-weight: normal;
     font-style: normal;
-    src: url("./ch02/fonts/slackey.woff") format("woff"),
-        url("./ch02/fonts/slackey.ttf") format("truetype");
+    src: url("../fonts/slackey.woff") format("woff"),
+        url("../fonts/slackey.ttf") format("truetype");
 }
 @font-face {
     font-family: "Geo";
     font-weight: normal;
     font-style: normal;
-    src: url("./ch02/fonts/geo.woff") format("woff"),
-        url("./ch02/fonts/geo.ttf") format("truetype");
+    src: url("../fonts/geo.woff") format("woff"),
+        url("../ch02/fonts/geo.ttf") format("truetype");
 }

@@ -15,11 +15,19 @@
             jewel.load("scripts/dom.js");
             if(jewel.isStandalone()) {
                 jewel.load("scripts/screen.splash.js");
-                jewel.load("scripts/screen.main-menu.js");              
+                jewel.load("scripts/screen.main-menu.js");
+                
+                if (jewel.hasWebWorkers && jewel.hasWebWorkers()) {
+                    jewel.load("scripts/board.worker-interface.js", jewel.setup);
+                    console.log("worker");
+                } else {
+                    jewel.load("scripts/board.js", jewel.setup);
+                }
+
             } else{
-                jewel.load("scripts/screen.install.js");
+                jewel.load("scripts/screen.install.js", jewel.setup);
             }
-            jewel.load("scripts/board.js", jewel.setup);
+
         });
     </script>
 </head>
@@ -43,7 +51,7 @@
         <div class="screen" id="install-screen">
             <h1 class="logo">Jewel <br />Warrior</h1>
             <span>
-                Click the <img src="./ch03/images/install-icon.png" alt="Install icon"> 
+                Click the <img src="../images/install-icon.png" alt="Install icon"> 
                 button to install the game to your home screen. 
             </span> 
         </div>
