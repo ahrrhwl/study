@@ -112,7 +112,13 @@ var jewel = (function(){
         return ("Worker" in window);
     }
 
+    function preload(src) {
+        var image = new Image();
+        image.src = src;
+    }
+
     return {
+        preload: preload,
         hasWebWorkers: hasWebWorkers,
         load: load,
         setup: setup, 
