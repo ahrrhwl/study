@@ -29,8 +29,8 @@ jewel.board = (function() {
 
     function initialize(callback) {
         settings = jewel.settings;
-        rows = jewel.setting.rows;
-        cols = jewel.setting.cols;
+        rows = jewel.settings.rows;
+        cols = jewel.settings.cols;
         messageCount = 0;
         callbacks = [];
         worker = new Worker("scripts/board.js");

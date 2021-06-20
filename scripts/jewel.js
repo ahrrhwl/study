@@ -117,7 +117,12 @@ var jewel = (function(){
         image.src = src;
     }
 
+    function getLoadProgress() {
+        return numResourcesLoaded / numResources;
+    }
+
     return {
+        getLoadProgress: getLoadProgress,
         preload: preload,
         hasWebWorkers: hasWebWorkers,
         load: load,
