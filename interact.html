@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,user-scalable=0">
+	<title>Interacting</title>
+</head>
+<body>
+    <button id="toggleButton">Toggle Keyboard</button><br />
+    <span id="output"></span>
+    
+    <script>
+        function toggleKeyboard() {
+            var kbToggle = document.getElementById("kbToggle");
+            //create element if it doesn't exist
+
+            if (!kbToggle) {
+                kbToggle = document.createElement("input");
+                kbToggle.id = "kbToggle";
+                kbToggle.style.position = "absolute";
+                kbToggle.style.left = "-1000px";
+                document.body.appendChild(kbToggle);
+                // keep the focus
+                kbToggle.addEventListener("blur", function() {
+                    kbToggle.focus();
+                }, false);
+            }
+
+            // switch classes and focus
+            if (kbToggle.className == "on") {
+                kbToggle.className = "off";
+                kbToggle.blur();
+            } else {
+                kbToggle.className = "on";
+                kbToggle.focus();
+            }
+        }
+
+        // output pressed key
+        document.addEventListener("keypress", function(e) {
+            document.getElementById("output").innerHTML 
+                = "You pressed: " + String.fromCharCode(e.charCode);
+        }, false);
+
+        // toggle keyboard on click
+        document.getElementById("toggleButton").addEventListener("click", toggleKeyboard, false);
+    </script>
+
+    <div>
+        Touch X: <input id="touchx"><br />
+        Touch Y: <input id="touchy">
+    </div>
+
+    <script>
+        var touchx = document.getElementById("touchx"),
+            touchy = document.getElementById("touchy");
+
+        document.addEventListener("touchMove", function(e) {
+            touchx.value = e.touches[0].clientX;
+            touchy.value = e.touches[0].clientY;
+            e.preventDefault();
+        }, false);
+    </script>
+</body>
+</html>
