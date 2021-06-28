@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,user-scalable=0">
+	<title>Animation</title>
+    <style>
+		body {
+			overflow : hidden;
+		}
+		#anim {
+			position : absolute;
+			width : 100px;
+			height : 100px;
+			background-color : orange;
+		}
+		#anim2 {
+			position : absolute;
+			width : 80px;
+			height : 80px;
+			background-color : rgb(4, 0, 255);
+		}
+	</style>
+</head>
+<body>
+    <div id="anim"></div>
+    <div id="anim2"></div>
+<script>
+    window.requestAnimationFrame = (function() {
+        var startTime = Date.now;
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame || 
+            window.mozRequestAnimationFrame ||
+            function(callback) {
+                return window.setTimeout(
+                    function() { callback(Date.now() - startTime); }
+                    , 1000 / 60
+                );
+            };
+    })();
+
+    window.cancelAnimationFrame = (function() {
+        return window.cancelAnimationFrame ||
+            window.webkitCancelRequestAnimationFrame || 
+            window.mozCancelRequestAnimationFrame ||
+            window.clearTimeout;
+    })();
+
+    function animate() {
+        var element = document.getElementById("anim");
+        time = Date.now();
+
+        // element is assumed to have position: absolute
+        element.style.left = (50 + Math.cos(time / 500) * 25) + "%";
+        element.style.top = (50 + Math.sin(time / 500) * 25) + "%";
+
+        setTimeout(animate, 1000 / 30);
+    }
+    animate();
+
+    function animate2(time) {
+        var element = document.getElementById("anim2");
+
+        // element is assumed to have position: absolute
+        element.style.left = (50 + Math.cos(time / 500) * 25) + "%";
+        element.style.top = (50 + Math.sin(time / 500) * 25) + "%";
+
+        requestAnimationFrame(animate2);
+    }
+    requestAnimationFrame(animate2);
+</script>
+
+</body>

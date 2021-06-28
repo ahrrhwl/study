@@ -9,6 +9,9 @@ var jewel = (function(){
         cols: 8,
         baseScore: 100,
         numJewelTypes: 7, 
+        baseLevelTimer: 60000,
+        baseLevelScore: 1500,
+        baseLevelExp: 1.05,
         controls: {
             // keyboard
             KEY_UP: "moveUp",
@@ -26,7 +29,7 @@ var jewel = (function(){
             LEFT_STICK_DOWN: "moveDown", 
             LEFT_STICK_LEFT: "moveLeft",
             LEFT_STICK_RIGHT: "moveRight"
-        }        
+        }
     };
 
 ;

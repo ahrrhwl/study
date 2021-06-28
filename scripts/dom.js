@@ -27,11 +27,24 @@ jewel.dom = (function(){
         element.addEventListener(event, handler, false);
     }
 
+    function transform(element, value) {
+        if ("transform" in element.style) {
+            element.style.transform = value;
+        } else if ("webkitTransform" in element.style) {
+            element.style.webkitTransform = value;
+        } else if ("mozTransform" in element.style) {
+            element.style.mozTransform = value;
+        } else if ("msTransform" in element.style) {
+            element.style.msTransform = value;
+        }
+    }
+
     return {
         $: $,
         hasClass: hasClass,
         addClass: addClass,
         removeClass: removeClass, 
-        bind: bind
+        bind: bind, 
+        transform: transform
     };
 })();

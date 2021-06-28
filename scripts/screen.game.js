@@ -1,17 +1,33 @@
 jewel.screens["game-screen"] = (function() {
-    var paused, 
+    var settings = jewel.settings,
+        paused, 
+        pauseStart,
         cursor,
+        gameState,
         firstRun = true;
 
     function startGame() {
         var board = jewel.board,
             display = jewel.display;
 
+        gameState = {
+            level: 0,
+            score: 0,
+            timer: 0, // setTimeout reference 
+            startTime: 0, // time at start of level
+            endTime: 0 // time to game over
+        };
+        cursor = {
+            x: 0, y: 0, selected: false
+        };
+
+        updateGameInfo();
+        //setLevelTimer(true);
         board.initialize(function() {
             display.initialize(function() {
-                cursor = {x: 0, y: 0, selected: false};
                 display.redraw(board.getBoard(), function() {
-
+                    //cursor = {x: 0, y: 0, selected: false};
+                    advanceLevel();
                 });
             });
         });
@@ -22,15 +38,24 @@ jewel.screens["game-screen"] = (function() {
         overlay.style.display = "none";
     }
 
+    function updateGameInfo() {
+        var $ = jewel.dom.$;
+        $("#game-screen .score span")[0].innerHTML = gameState.score;
+        $("#game-screen .level span")[0].innerHTML = gameState.level;
+    }
+
     function pauseGame() {
         if(paused) {
             return; // do nothing if already paused
         }
-        paused = true;
+        
         var dom = jewel.dom, 
            overlay = dom.$("#game-screen .pause-overlay")[0];
         overlay.style.display = "block";
         paused = true;
+        pauseStart = Date.now();
+        clearTimeout(gameState.timer);
+        jewel.display.pause();
     }
 
     function resumeGame() {
@@ -38,6 +63,11 @@ jewel.screens["game-screen"] = (function() {
            overlay = dom.$("#game-screen .pause-overlay")[0];
         overlay.style.display = "none"; 
         paused = false;
+        
+        var pauseTime = Date.now() - pauseStart;
+        gameState.startTime += pauseTime;
+        setLevelTimer();
+        jewel.display.resume(pauseTime);
     }
 
     function exitGame() {
@@ -57,9 +87,14 @@ jewel.screens["game-screen"] = (function() {
         cursor.y = y;
         cursor.selected = select;
         jewel.display.setCursor(x, y, select);
+        console.log(cursor);
     }
 
     function selectJewel(x, y) {
+        if (paused) {
+            return;
+        }
+
         if (arguments.length === 0) {
             selectJewel(cursor.x, cursor.y);
             return;
@@ -89,6 +124,7 @@ jewel.screens["game-screen"] = (function() {
 
     function playBoardEvents(events) {
         var display = jewel.display; 
+        
         if(events.length > 0) {
             var boardEvent = events.shift(), 
                 next = function() {
@@ -97,11 +133,19 @@ jewel.screens["game-screen"] = (function() {
 
             switch (boardEvent.type) {
                 case "move": 
-                    display.moveJewels(boardEvent.data, next)
+                    display.moveJewels(boardEvent.data, next);
                     break;
                 case "remove":
                     display.removeJewels(boardEvent.data, next);
                     break;
+                case "refill":
+                    announce("No moves!");
+                    display.refill(boardEvent.data, next);
+                    break;
+                case "score": // new score event
+                    addScore(boardEvent.data);
+                    next();
+                    break;                    
                 default:
                     next();
                     break;
@@ -114,6 +158,10 @@ jewel.screens["game-screen"] = (function() {
     }
 
     function moveCursor(x, y) {
+        if (paused) {
+            return;
+        }
+
         var settings = jewel.settings;
         if (cursor.selected) {
             x += cursor.x;
@@ -158,6 +206,76 @@ jewel.screens["game-screen"] = (function() {
         input.bind("moveDown", moveDown);
         input.bind("moveLeft", moveLeft);
         input.bind("moveRight", moveRight);
+    }
+
+    function setLevelTimer(reset) {
+        var $ = jewel.dom.$;
+        if(gameState.timer) {
+            clearTimeout(gameState.timer);
+            gameState.timer = 0;
+        }
+        
+        if(reset) {
+            gameState.startTime = Date.now();
+            gameState.endTime = 
+                settings.baseLevelTimer * 
+                Math.pow(gameState.level, -0.05 * gameState.level);
+        }            
+        
+        var delta = gameState.startTime + gameState.endTime - Date.now(), 
+                percent = (delta / gameState.endTime) * 100, 
+                progress = $("#game-screen .time .indicator")[0];
+
+        if (delta < 0) {
+            gameOver();
+        } else {
+            progress.style.width = percent + "%";
+            gameState.timer = setTimeout(setLevelTimer, 30);
+        }
+    }
+
+    function addScore(points) {
+        var nextLevelAt = Math.pow(
+                settings.baseLevelScore,
+                Math.pow(settings.baseLevelExp, gameState.level-1)
+            );
+
+        gameState.score += points;
+
+        if (gameState.score >= nextLevelAt) {
+            advanceLevel();
+        }
+
+        updateGameInfo();
+    }
+
+    function advanceLevel() {
+        gameState.level++;
+        announce("Level " + gameState.level);
+        updateGameInfo();
+        gameState.startTime = Date.now();
+        gameState.endTime = settings.baseLevelTimer * 
+            Math.pow(gameState.level, -0.05 * gameState.level);
+        setLevelTimer(true);
+        jewel.display.levelUp();
+    }
+
+    function announce(str) {
+        var dom = jewel.dom, 
+            $ = dom.$,
+            element = $("#game-screen .announcement")[0];
+        
+        element.innerHTML = str;
+        dom.removeClass(element, "zoomfade");
+        setTimeout(function() {
+            dom.addClass(element, "zoomfade");
+        }, 1);
+    }
+
+    function gameOver() {
+        jewel.display.gameOver(function() {
+            announce("Game over");
+        });
     }
 
     function run() {
