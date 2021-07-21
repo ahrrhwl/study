@@ -28,6 +28,8 @@
                 jewel.load("scripts/display.canvas.js");
                 jewel.load("scripts/input.js");
                 jewel.load("scripts/audio.js");
+                jewel.load("scripts/storage.js");
+                jewel.load("scripts/screen.high-scores.js");
             } else{
                 jewel.load("scripts/screen.install.js", jewel.setup);
             }
@@ -48,7 +50,7 @@
             <h2 class="logo">Jewel <br />Warrior</h2>
             <ul class="menu">
                 <li><button name="game-screen">Play</button></li>
-                <li><button name="high-score">Highscroe</button></li>
+                <li><button name="high-scores">Highscroe</button></li>
                 <li><button name="about">About</button></li>
                 <li><button name="exit-screen">Exit</button></li>
             </ul>
@@ -70,7 +72,14 @@
                 <div class="pause-text">Pause</div>
             </div>
         </div>
-        <div class="screen" id="high-scores"></div>
+        <div class="screen" id="high-scores">
+            <h2 class"logo">High score</h2>
+            <ol class="score-list">
+            </ol>
+            <footer>
+                <button name="back">Back</button>
+            </footer>
+        </div>
         <div class="screen" id="install-screen">
             <h1 class="logo">Jewel <br />Warrior</h1>
             <span>

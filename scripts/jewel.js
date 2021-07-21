@@ -113,6 +113,8 @@ var jewel = (function(){
             activeScreen = $("#game .screen.active")[0], 
             screen = $("#" + screenId)[0];
         if(!jewel.screens[screenId]) {
+
+            console.log(screenId);
             alert("This module is not implemented yet!");
             return;
         }

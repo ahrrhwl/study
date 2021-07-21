@@ -27,7 +27,7 @@ jewel.board = (function() {
         }
     }
 
-    function initialize(callback) {
+    function initialize(startJewels, callback) {
         settings = jewel.settings;
         rows = jewel.settings.rows;
         cols = jewel.settings.cols;
@@ -35,7 +35,12 @@ jewel.board = (function() {
         callbacks = [];
         worker = new Worker("scripts/board.js");
         jewel.dom.bind(worker, "message", messageHandler);
-        post("initialize", jewel.settings, callback);
+
+        var data = {
+            settings: jewel.settings,
+            startJewels: startJewels
+        }
+        post("initialize", data, callback);
     } 
 
     function swap(x1, y1, x2, y2, callback) {

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,user-scalable=0">
+	<title>Local Storage</title>
+    <style>
+		body {
+			margin : 0;
+			overflow : hidden;
+		}
+		textarea {
+			padding : 1em;
+			width : 100%;
+            height: 200px;
+		}
+	</style>
+</head>
+<body>
+    <textarea id="input"></textarea>
+    <textarea id="input2"></textarea>
+
+    <script>
+        var input = document.getElementById("input");
+        input.value = localStorage.getItem("mytext") || "";
+
+        input.addEventListener("keyup", function() {
+            localStorage.setItem("mytext", input.value);
+        }, false);
+
+        var input2 = document.getElementById("input2");
+        input2.value = sessionStorage.getItem("mytext2") || "";
+
+        input2.addEventListener("keyup", function() {
+            sessionStorage.setItem("mytext2", input2.value);
+        }, false);
+    </script>
+
+</body>
+</html>

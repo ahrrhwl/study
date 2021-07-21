@@ -225,6 +225,32 @@ ul.menu li button:active {
     background: rgb(30, 40, 0);
 }
 
+/* High score */
+#high-score h2 {
+    margin-top: 0.25em;
+    font-size: 1.25em;
+}
+#high-scores ol.score-list {
+    font-size: 0.65em;
+    width: 75%;
+    margin: 0 10%;
+}
+#high-scores ol.score-list li {
+    width: 100%;
+}
+#high-scores ol.score-list li span:nth-child(1) {
+    display: inline-block;
+    width: 70%;
+}
+#high-scores ol.score-list li span:nth-child(2) {
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+}
+#high-scores footer button.back {
+    float: left;
+}
+
 @font-face {
     font-family: "Slackey";
     font-weight: normal;
