@@ -1,0 +1,12 @@
+CACHE MANIFEST
+# Jewel Warrior cache manifest
+
+CACHE:
+images/jewels24.png
+images/jewels32.png
+images/jewels40.png
+images/jewels64.png
+images/jewels80.png
+NETWORK:
+
+FALLBACK:
